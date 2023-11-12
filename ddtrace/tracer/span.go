@@ -515,6 +515,9 @@ func (s *span) finish(finishTime int64) {
 		if t.config.canDropP0s() {
 			// the agent supports dropping p0's in the client
 			keep = shouldKeep(s)
+			if !keep {
+				log.Info(fmt.Sprintf("Dropping Span - [Service]:%s, [Resource]:%s, [Trace]:%d, [Parent]:%d", s.Service, s.Resource, s.TraceID, s.SpanID))
+			}
 		}
 		if t.config.debugAbandonedSpans {
 			// the tracer supports debugging abandoned spans
